@@ -53,7 +53,13 @@ async function run() {
       }
     });
 
-   
+    // Getting single product data
+    app.get("/products/:category/:id", async (req, res) => {
+      const id = req.params.id;
+      const query = { _id: new ObjectId(id) };
+      const result = await productsCollection.findOne(query);
+      res.send(result);
+    });
 
     // Send a ping to confirm a successful connection
     await client.db("admin").command({ ping: 1 });
