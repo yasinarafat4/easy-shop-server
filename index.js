@@ -28,6 +28,7 @@ async function run() {
 
     // Collection
     const productsCollection = client.db("EasyShopDB").collection("products");
+    const popularCollection = client.db("EasyShopDB").collection("popular");
 
     // Getting all products data
     app.get("/products", async (req, res) => {
@@ -58,6 +59,12 @@ async function run() {
       const id = req.params.id;
       const query = { _id: new ObjectId(id) };
       const result = await productsCollection.findOne(query);
+      res.send(result);
+    });
+
+    // Getting all popular data
+    app.get("/popular", async (req, res) => {
+      const result = await popularCollection.find().toArray();
       res.send(result);
     });
 
