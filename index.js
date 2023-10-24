@@ -26,9 +26,10 @@ async function run() {
     // Connect the client to the server
     // await client.connect();
 
-    // Collection
+    // Collections
     const productsCollection = client.db("EasyShopDB").collection("products");
     const popularCollection = client.db("EasyShopDB").collection("popular");
+    const cartCollection = client.db("EasyShopDB").collection("carts");
 
     // Getting all products data
     app.get("/products", async (req, res) => {
@@ -65,6 +66,14 @@ async function run() {
     // Getting all popular data
     app.get("/popular", async (req, res) => {
       const result = await popularCollection.find().toArray();
+      res.send(result);
+    });
+
+    // Posting carts data
+    app.post("/carts", async (req, res) => {
+      const product = req.body;
+      console.log(product);
+      const result = await cartCollection.insertOne(product);
       res.send(result);
     });
 
